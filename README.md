@@ -1,4 +1,4 @@
-wgtotw
+Qcode
 =========
 
 A PHP-based and MVC-inspired (micro) framework / webbtemplate / boilerplate for a website forum.
