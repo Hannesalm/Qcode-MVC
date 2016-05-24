@@ -28,27 +28,19 @@ Some files need to be modified in order for the website to work.
 
 ### Setup
 
-You need to set up the database before you can use the website (ie content and user management). 
+There is no vendor mapp in this version. YOu need to do composer update to get all files needed for this MVC.
 
-In your web browser, type in: `[YOUR_INSTALLATION_PATH]/webroot/setup`  
-The script will create tables and some example content (users, questions, answers, comments, tags). You should see the database output.
-
-If you want to start with an empty database, type in: `[YOUR_INSTALLATION_PATH]/webroot/setup-clean` in your web browser. 
 
 Using the site
 ---------------------
 
 ### Users and content
 
-It is possible for a site visitor to create and activate their own user account.
+A user can edit its profile and add questions plus tags. Answer questions and comment answers 
 
-A user can add and edit their own content (questions, answers, comments, user profile). (Except they can only add a tag, not edit or delete it). 
+Users can vote (+1 or -1) for questions that they approve of or disapprove of. 
 
-An administrator can edit and block users and edit and delete tags. Currently there is only one possible admin - a user with the username "admin". 
-
-Users can vote (+1 or -1) for questions, answers and comments that they approve of or disapprove of. 
-
-A user who posts a question can select one "accepted answer" from the answers they receive for their question.
+A user gets score for posting a question, answering a question and commenting on an answer.
 
 License
 ------------------
@@ -61,16 +53,6 @@ Use of external libraries
 
 The following external modules are included and subject to its own license.
 
-
-
-### Modernizr
-* Website: http://modernizr.com/
-* Version: 2.6.2
-* License: MIT license
-* Path: included in `webroot/js/modernizr.js`
-
-
-
 ### PHP Markdown
 * Website: http://michelf.ca/projects/php-markdown/
 * Version: 1.4.0, November 29, 2013
@@ -79,11 +61,10 @@ The following external modules are included and subject to its own license.
 
 
 
-
 History
 -----------------------------------
 
 
-###History for wgtotw
+###History for Qcode
 
 v1.0 (latest)
