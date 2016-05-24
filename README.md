@@ -3,11 +3,11 @@ Qcode
 
 A PHP-based and MVC-inspired (micro) framework / webbtemplate / boilerplate for a website forum.
 
-Wgtotw is built using Anax-MVC as base. Anax-MVC has been extended with database support (cdatabase module), forms (cform module), content management and users.
+Qcode is built using Anax-MVC as base. Anax-MVC has been extended with database support (cdatabase module), forms (cform module), content management and users.
 
 Read article about Anax-MVC here: ["Anax som MVC-ramverk"](http://dbwebb.se/kunskap/anax-som-mvc-ramverk) and here ["Bygg en me-sida med Anax-MVC"](http://dbwebb.se/kunskap/bygg-en-me-sida-med-anax-mvc).
 
-Wgtotw is by Maria Jonsson.
+Qcode is made by Hannes Alm, hannes@almar.se
 Anax-MVC by Mikael Roos, me@mikaelroos.se.
 
 Install and setup
