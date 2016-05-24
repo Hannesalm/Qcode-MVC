@@ -22,10 +22,9 @@ Some files need to be modified in order for the website to work.
 
 * `webroot/.htaccess`  
   Settings for clean URLs. #Rewrite module must be on for clean urls to work. Change base url in #Rewrite base if necessary.
-* `app/config/config_mysql.php`  
-  Change the settings for MySQL. This file is referred to from webroot/index.php
-* `webroot/css/anax-wgtotw`  
-  This folder must be writable (chmod 777) for style.php and .less styles to work.
+* `webroot/css/style.php, style_config.php, style.less.cache`  
+  This files must be writable (chmod 777) for less styles to work.
+
 
 ### Setup
 
