@@ -20,6 +20,16 @@ class User extends \Anax\Users\CDatabaseModel {
         $this->session->set('userID', $res[0]->id);
     }
 
+    public function find($user){
+        $this->db->select()
+            ->from($this->getSource())
+            ->where("id = ?");
+
+        $this->db->execute([$user]);
+
+
+        return $this->db->fetchInto($this);
+    }
 
     public function findUser($user){
         $this->db->select()
@@ -33,7 +43,7 @@ class User extends \Anax\Users\CDatabaseModel {
     }
 
     public function findMostActive(){
-        $this->db->select()->from($this->getSource())->orderBy('latest_activity DESC');
+        $this->db->select()->from($this->getSource())->orderBy('score DESC');
 
         $this->db->execute();
         $this->db->setFetchModeClass(__CLASS__);

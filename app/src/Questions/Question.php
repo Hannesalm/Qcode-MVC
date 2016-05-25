@@ -184,6 +184,7 @@ class Question extends \Anax\Users\CDatabaseModel {
     public function save($values = [])
     {
         $this->setProperties($values);
+
         $values = $this->getProperties();
 
         if (isset($values['question_id'])) {
@@ -335,6 +336,8 @@ class Question extends \Anax\Users\CDatabaseModel {
 
         foreach($tags as $tag){
             $string = preg_replace('/\s+/', '', $tag);
+            $string = str_replace('#', '', $string);
+
             $res = $this->findTag($string);
             if(!$res){
                 if(!empty($string)){
@@ -376,6 +379,7 @@ class Question extends \Anax\Users\CDatabaseModel {
 
         foreach ($tags as $tag) {
             $string = preg_replace('/\s+/', '', $tag);
+            $string = str_replace('#', '', $string);
             $res = $this->findTag($string);
             $tagID = $res->tag_id;
 
@@ -550,6 +554,76 @@ class Question extends \Anax\Users\CDatabaseModel {
             $keys,
             "question_id = ?"
         );
+
+        return $this->db->execute($values);
+    }
+
+    public function acceptAnswer($id){
+
+        $this->db->select()
+            ->from('comments')
+            ->join('question', 'comments.question_id = question.question_id')
+            ->where("comment_id = ?");
+
+        $this->db->execute([$id]);
+
+        $res = $this->db->fetchInto($this);
+        $question_id = $res->question_id;
+        $acceptedStatus = $res->accepted_answer;
+
+
+        if($res->accepted == 1){
+
+            $values = [0, $id];
+            $keys = ['accepted'];
+            $this->db->update(
+                'comments',
+                $keys,
+                "comment_id = ?"
+            );
+
+            $this->db->execute($values);
+
+            $this->setAcceptedAnswer($question_id, $acceptedStatus);
+
+
+        } else {
+            if($acceptedStatus != 1){
+
+                $values = [1, $id];
+                $keys = ['accepted'];
+                $this->db->update(
+                    'comments',
+                    $keys,
+                    "comment_id = ?"
+                );
+                $this->db->execute($values);
+
+                $this->setAcceptedAnswer($question_id, $acceptedStatus);
+
+            }
+
+        }
+    }
+
+    public function setAcceptedAnswer($id, $acceptedStatus){
+        if($acceptedStatus == 1){
+            $values = [0, $id];
+            $keys = ['accepted_answer'];
+            $this->db->update(
+                'question',
+                $keys,
+                "question_id = ?"
+            );
+        } else {
+            $values = [1, $id];
+            $keys = ['accepted_answer'];
+            $this->db->update(
+                'question',
+                $keys,
+                "question_id = ?"
+            );
+        }
 
         return $this->db->execute($values);
     }

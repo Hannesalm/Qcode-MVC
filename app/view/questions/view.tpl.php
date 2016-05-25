@@ -1,7 +1,10 @@
 <?php
 $loggedIn = false;
+$userID = -1;
 if($this->session->isAuthenticated() == 1){
     $loggedIn = true;
+    $userName = $this->session->get('userName');
+    $userID = $this->session->get('userID');
 }
 
 $gravatar = "http://www.gravatar.com/avatar";
@@ -54,9 +57,9 @@ if($sinceThen->y == 0){
 ?>
 <div class="well">
     <div class="media">
-        <a class="pull-left" href="<?= $gravatar?>">
+        <div class="pull-left" href="<?= $gravatar?>">
             <img class="thumbnail" src="<?= $gravatar?>">
-        </a>
+        </div>
         <div class="media-body">
             <a href="<?= $this->di->get('url')->create('questions/id/' . $question->question_id) ?>"><h4 class="media-heading"><?=$question->getProperties()['title']?></h4></a>
             <p class="text-right">By <?= $question->name?></p>
@@ -87,6 +90,28 @@ if($sinceThen->y == 0){
 </div>
 <?php foreach ($answers as $answer) : ?>
 <?php
+$addComment = "";
+if($loggedIn){
+    $addComment = "<a href='" . $this->di->get('url')->create('questions/commentID/' . $answer->comment_id) ."' class=\"btn btn-default btn-xs pull-right\">Add comment</a>";
+}
+if($userID == $question->id){
+    if($question->accepted_answer == 1){
+        if($answer->accepted == 1){
+            $accepted = "<a href='". $this->di->get('url')->create('questions/accept/' . $answer->comment_id) ."' class='btn btn-xs btn-success'><span class='glyphicon glyphicon-ok'></span>Accepted</a>";
+        } else {
+            $accepted = "<a href='". $this->di->get('url')->create('questions/accept/' . $answer->comment_id) ."' class='btn btn-xs btn-info'><span class='glyphicon glyphicon-ok'></span>Accept</a>";
+        }
+    } else {
+        $accepted = "<a href='". $this->di->get('url')->create('questions/accept/' . $answer->comment_id) ."' class='btn btn-xs btn-info'><span class='glyphicon glyphicon-ok'></span>Accept</a>";
+    }
+} else {
+    if($answer->accepted == 1){
+        $accepted = "<div class='btn btn-xs btn-success'><span class='glyphicon glyphicon-ok'></span>Accepted</div>";
+    } else {
+        $accepted = "";
+    }
+}
+
 $gravatarAnswer = "http://www.gravatar.com/avatar";
 if(isset($answer->gravatar)){
     $gravatarAnswer = $answer->gravatar;
@@ -96,10 +121,12 @@ $content = $this->textFilter->doFilter($answer->content, 'shortcode, markdown');
 ?>
 <div class="media">
     <div class="media-left">
-        <a href="#">
+        <div>
             <img class="thumbnail" src="<?=$gravatarAnswer?>" alt="Gravatar">
-        </a>
-        <a href="<?= $this->di->get('url')->create('questions/commentID/' . $answer->comment_id) ?>" class="btn btn-default btn-xs btn-block">Add comment</a>
+        </div>
+        <div class="text-center">
+            <?= $accepted ?>
+        </div>
     </div>
     <div class="media-body">
 
@@ -107,6 +134,7 @@ $content = $this->textFilter->doFilter($answer->content, 'shortcode, markdown');
             <div style="min-height: 100px; font-size: 14px;">
         <p class="text-right">By <?= $answer->name?></p>
                 <?=$content?>
+                <?=$addComment?>
             </div>
             <?php if(is_array($comments)) : ?>
             <?php foreach ($comments as $comment) : ?>
@@ -120,16 +148,10 @@ $content = $this->textFilter->doFilter($answer->content, 'shortcode, markdown');
                         ?>
 
         <div class="media">
-            <div class="media-left">
-                <a href="#">
-                    <img class="thumbnail" src="<?=$gravatar?>" alt="...">
-                </a>
-            </div>
-
-            <div class="media-body">
+            <div class="media-body" style="border-top: solid 1px grey;">
                 <div style="min-height: 100px; font-size: 14px;">
-                <p class="text-right">By <?= $comment->name?></p>
-                    <?=$content?>
+                    <?=$content?> - <a href="#">By <?= $comment->name?></a>
+                <div class="clearfix"></div>
                 </div>
             </div>
         </div>

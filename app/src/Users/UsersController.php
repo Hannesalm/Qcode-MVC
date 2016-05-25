@@ -501,6 +501,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
             $username = $this->request->getPost('username');
             $password = $this->request->getPost('password');
+            $password_from_database = "";
 
             if (isset($username) && isset($password)) {
 
@@ -579,6 +580,8 @@ class UsersController implements \Anax\DI\IInjectionAware
             var_dump('Check method returned false');
             die;
         }
+
+        $this->theme->setTitle("Login");
 
         $this->views->add('project/login', [
             'content' => $form->getHTML(),

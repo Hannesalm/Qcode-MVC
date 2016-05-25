@@ -469,4 +469,17 @@ class QuestionsController implements \Anax\DI\IInjectionAware
         ]);
     }
 
+    public function acceptAction($id = null){
+
+        $this->initialize();
+
+        $res = $this->questions->getAnswerByID($id);
+
+        $this->questions->acceptAnswer($id);
+
+        $idUrl = "questions/id/". $res->question_id;
+        $url = $this->url->create($idUrl);
+        $this->response->redirect($url);
+    }
+
 }

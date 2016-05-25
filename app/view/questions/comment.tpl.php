@@ -1,4 +1,17 @@
 <?php
+$loggedIn = false;
+$userID = null;
+if($this->session->isAuthenticated() == 1){
+    $loggedIn = true;
+    $userName = $this->session->get('userName');
+    $userID = $this->session->get('userID');
+}
+
+$createComment = "";
+if($loggedIn){
+    $createComment = $form;
+}
+
 $gravatar = "http://www.gravatar.com/avatar";
 if(isset($answer->gravatar)){
     $gravatar = $answer->gravatar;
@@ -23,5 +36,5 @@ $content = $this->textFilter->doFilter($answer->content, 'shortcode, markdown');
 </div>
 
 <div class="container">
-    <?= $form?>
+    <?= $createComment?>
 </div>

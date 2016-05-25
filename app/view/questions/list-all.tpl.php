@@ -13,9 +13,9 @@
         $answers_count = "0";
         if(isset($question->answers))
             if($question->answers == 1){
-                $answers_count = $question->answers . ' answer';
+                $answers_count = $question->answers . " answer";
             } else {
-                $answers_count = $question->answers . " 'answers'";
+                $answers_count = $question->answers . " answers";
             }
 
         $now = new DateTime();
@@ -54,9 +54,9 @@
 
         <div class="well">
             <div class="media">
-                <a class="pull-left" href="<?= $gravatar?>">
+                <div class="pull-left" href="<?= $gravatar?>">
                     <img class="thumbnail" src="<?=$gravatar?>">
-                </a>
+                </div>
                 <div class="media-body">
                     <a href="<?= $this->di->get('url')->create('questions/id/' . $question->question_id) ?>"><h4 class="media-heading"><?= $question->title?></h4></a>
                     <p class="text-right">By <?= $question->name?></p>
